@@ -15,7 +15,7 @@ public class Persistance
     public static void Save(ItemCollection o)
     {
         List<string> props = new();
-        foreach (object i in o) props.Add(i.ToString().Trim());
+        foreach (object i in o) props.Add(i.ToString().Replace("\n", "<br>").Trim());
         Write(props);
     }
 }
