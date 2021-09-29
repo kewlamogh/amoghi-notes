@@ -8,18 +8,18 @@
         Title="amoghi-notes" Height="450" Width="800">
     <Grid Margin="0,0,-90,-58">
         <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
-            <TextBlock x:Name="text" FontSize="50">AmoghiNotes</TextBlock>
-            <TextBlock x:Name="Alert"></TextBlock><TextBox x:Name="noteText" Margin="0, 0, 0, 10"></TextBox>
-            <Button x:Name="Clear" Click="ClearClick" Margin="0,0,0,10">Clear TextBox</Button>
-            <Button x:Name="BtnAdd" Margin="0,0,0,10" Click="BtnAdd_Click">Add Note</Button>
-            <Button Click="Button_Click" Margin="0, 0, 0, 10">Delete All Notes</Button>
-            <ListBox x:Name="notes" MouseDoubleClick="Notes_DoubleClick">
+            <TextBlock FontFamily="Verdana" x:Name="text" Width="703" FontSize="50">AmoghiNotes</TextBlock>
+            <TextBlock x:Name="Alert" FontFamily="Comic Sans MS, Verdana" Width="353"></TextBlock>
+            <TextBox Width="703" x:Name="noteText" Margin="0, 0, 0, 10"></TextBox>
+            <Button x:Name="Clear" Click="ClearClick" Width="703" Margin="0,0,0,10">Clear TextBox</Button>
+            <Button x:Name="BtnAdd" Margin="0,0,0,10" Width="703" Click="BtnAdd_Click">Add Note</Button>
+            <Button Click="Button_Click" Margin="0, 0, 0, 10" Width="703">Delete All Notes</Button>
+            <ListBox x:Name="notes" MouseDoubleClick="Notes_DoubleClick" Width="703">
             </ListBox>
 
-            <TextBlock FontSize="50" FontFamily="Segoe" Margin="0, 30, 0, 10">Search</TextBlock>
-            <TextBox x:Name="query" Margin="0, 0, 0, 10" Width="703"></TextBox>
-            <Button x:Name ="y" Click="y_Click" Margin="0, 0, 0, 10" Width="710">Search Notes</Button>
-            <ListBox x:Name="results"></ListBox>
+            <TextBlock FontSize="50" FontFamily="Verdana" Width="703" Margin="0, 30, 0, 10">Search</TextBlock>
+            <TextBox x:Name="query" Margin="0, 0, 0, 10" Width="703" KeyUp="Search"></TextBox>
+            <ListBox x:Name="results" Width="703"></ListBox>
         </StackPanel>
     </Grid>
 </Window>

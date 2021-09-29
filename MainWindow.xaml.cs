@@ -63,15 +63,15 @@ namespace amoghi_notes
             notes.Items.Clear();
         }
 
-        private void y_Click(object sender, RoutedEventArgs e)
+        private void Search(object sender, RoutedEventArgs e)
         {
             IEnumerable<string> x = from y in Persistance.GetAll()
-                                    where y.Contains(query.Text)
+                                    where y.Contains(query.Text) && y.Trim() != ""
                                     select y;
             results.Items.Clear();
             foreach (var i in x)
             {
-                results.Items.Add(i);
+                results.Items.Add(i.Trim());
             }
         }
     }
