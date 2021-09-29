@@ -1,0 +1,25 @@
+﻿<Window x:Class="amoghi_notes.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:amoghi_notes"
+        mc:Ignorable="d"
+        Title="amoghi-notes" Height="450" Width="800">
+    <Grid Margin="0,0,-90,-58">
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
+            <TextBlock x:Name="text" FontSize="50">AmoghiNotes</TextBlock>
+            <TextBlock x:Name="Alert"></TextBlock><TextBox x:Name="noteText" Margin="0, 0, 0, 10"></TextBox>
+            <Button x:Name="Clear" Click="ClearClick" Margin="0,0,0,10">Clear TextBox</Button>
+            <Button x:Name="BtnAdd" Margin="0,0,0,10" Click="BtnAdd_Click">Add Note</Button>
+            <Button Click="Button_Click" Margin="0, 0, 0, 10">Delete All Notes</Button>
+            <ListBox x:Name="notes" MouseDoubleClick="Notes_DoubleClick">
+            </ListBox>
+
+            <TextBlock FontSize="50" FontFamily="Segoe" Margin="0, 30, 0, 10">Search</TextBlock>
+            <TextBox x:Name="query" Margin="0, 0, 0, 10" Width="703"></TextBox>
+            <Button x:Name ="y" Click="y_Click" Margin="0, 0, 0, 10" Width="710">Search Notes</Button>
+            <ListBox x:Name="results"></ListBox>
+        </StackPanel>
+    </Grid>
+</Window>
