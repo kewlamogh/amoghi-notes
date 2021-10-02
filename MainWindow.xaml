@@ -3,23 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:amoghi_notes"
         mc:Ignorable="d"
         Title="amoghi-notes" Height="450" Width="800">
     <Grid Margin="0,0,-90,-58">
-            <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
-                <TextBlock FontFamily="Verdana" x:Name="text" Width="703" FontSize="50">AmoghiNotes</TextBlock>
-                <TextBlock x:Name="Alert" FontFamily="Comic Sans MS, Verdana" Width="353"></TextBlock>
-                <TextBox Width="703" x:Name="noteText" Margin="0, 0, 0, 10"></TextBox>
-                <Button x:Name="BtnAdd" Margin="0,0,0,10" Width="703" Click="BtnAdd_Click">Add Note</Button>
-                <Button Click="Button_Click" Margin="0, 0, 0, 10" Width="703">Delete All Notes</Button>
-                <Button Click="ClearClick" Width="703" Margin="0, 0, 0, 10" >Clear</Button>
-                <ListBox x:Name="notes" MouseDoubleClick="Notes_DoubleClick" Width="703" Height="200">
-                </ListBox>
-
-                <TextBlock FontSize="50" FontFamily="Verdana" Width="703" Margin="0, 30, 0, 10">Search</TextBlock>
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
+            <TextBlock FontFamily="Verdana" x:Name="text" Width="353" FontSize="50">AmoghiNotes</TextBlock>
+            <TextBlock x:Name="Alert" FontFamily="Comic Sans MS, Verdana" Width="703"></TextBlock>
+            <TextBox Width="703" x:Name="noteText" Margin="0, 0, 0, 10"></TextBox>
+            <Button x:Name="BtnAdd" Margin="0,0,0,10" Width="703" Click="BtnAdd_Click">Add Note</Button>
+            <Button Click="ClearClick" Width="703" Margin="0, 0, 0, 10" >Clear</Button>
+            <Button Width ="703" Click="Delete" Margin="0, 0, 0, 10" >Delete</Button>
+            <ListBox x:Name="notes" MouseDoubleClick="Notes_DoubleClick" Width="703" Height="200" Margin="0, 8, 0, 0">
+            </ListBox>
+            <TextBlock FontSize="50" FontFamily="Verdana" Width="253" Margin="0, 30, 0, 10">Search</TextBlock>
             <TextBox x:Name="query" Margin="0, 0, 0, 10" KeyUp="Search" Width="703"></TextBox>
-            <ListBox x:Name="results" Width="703"   Height="200"></ListBox>  
+            <ListBox x:Name="results" Width="703"   Height="200" Margin="0, 0, 0, 20" MouseDoubleClick="Notes_DoubleClick2"></ListBox>
+            <Button Width="100" Click="Refr" Margin="0, 0, 0, 5">Refresh Search</Button>
+            <Button Click="Button_Click" Margin="0, 10, 0, 0" Width="100">Delete All Notes</Button>
         </StackPanel>
     </Grid>
 </Window>

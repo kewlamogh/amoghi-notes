@@ -25,11 +25,26 @@ namespace amoghi_notes
 
     public partial class MainWindow : Window
     {
+        private string SelectedItem;
+        private bool _IsItemSelected;
+        private bool IsItemSelected { get { return _IsItemSelected; } set {
+                _IsItemSelected = value;
+                BtnAdd.Content = $"{(value ? "Edit" : "Add")} Note";
+            } }
+
         private readonly Func<string, string> Format = (string i) => i.Replace("<br>", "\n").Trim();
         private List<Item> items = new();
         private void ClearClick(object sender, RoutedEventArgs e)
         {
             noteText.Text = "";
+        }
+        private void Refr(object sender, RoutedEventArgs e)
+        {
+            notes.Items.Clear();
+            items.Clear();
+
+            Load();
+            SearchFunctionality();
         }
         private void Load()
         {
@@ -49,9 +64,10 @@ namespace amoghi_notes
 
             Persistance.Save(notes.Items);
 
+            IsItemSelected = false;
+
             if (noteText.Text == "")
             {
-                if (was == "[EDIT]") { _ = MessageBox.Show("Deleted!"); };
                 return;
             }
 
@@ -78,10 +94,15 @@ namespace amoghi_notes
             {
                 ItemCollection o = notes.Items;
 
-                noteText.Text = notes.Items[notes.SelectedIndex].ToString();
-                items[notes.SelectedIndex].Delete(ref o);
+                SelectedItem = notes.Items[notes.SelectedIndex].ToString();
+                noteText.Text = SelectedItem;
+
+                IsItemSelected = true;
+
+                notes.Items.Remove(SelectedItem);
                 Alert.Text = "[EDIT]";
                 Persistance.Save(notes.Items);
+
             } catch
             {
                 Console.WriteLine($"The index is: {notes.SelectedIndex}");
@@ -90,12 +111,18 @@ namespace amoghi_notes
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Persistance.Write( new List<string>() );
-            MessageBox.Show("Deleted!");
+            Persistance.Write(Persistance.GetAll(), "Recover.txt");
+
+            Persistance.Write(Array.Empty<string>(), "Persistor.txt");
+            MessageBox.Show("Deleted all notes [to recover them, go to Recover.txt, copy paste the contents into Persistor.txt, then click the refresh button].");
             notes.Items.Clear();
         }
 
         private void Search(object sender, RoutedEventArgs e)
+        {
+            SearchFunctionality();
+        }
+        private void SearchFunctionality()
         {
             IEnumerable<string> x = from y in Persistance.GetAll()
                                     where (y.Contains(query.Text.ToUpper()) || y.Contains(query.Text.ToLower())) && Format(y) != ""
@@ -103,5 +130,41 @@ namespace amoghi_notes
             results.Items.Clear();
             foreach (string i in x) results.Items.Add(Format(i));
         }
+
+        private void Delete(object sender, RoutedEventArgs e)
+        {
+            if (IsItemSelected)
+            {
+                notes.Items.Remove(SelectedItem);
+                noteText.Text = "";
+                Alert.Text = "";
+
+                MessageBox.Show($"Deleted \"{SelectedItem}\"");
+
+                IsItemSelected = false;
+            }
+        }
+        private void Notes_DoubleClick2(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ItemCollection o = notes.Items;
+
+                SelectedItem = results.Items[results.SelectedIndex].ToString();
+                noteText.Text = SelectedItem;
+
+                IsItemSelected = true;
+
+                notes.Items.Remove(SelectedItem);
+                Alert.Text = "[EDIT]";
+                Persistance.Save(notes.Items);
+
+            }
+            catch
+            {
+                Console.WriteLine($"The index is: {notes.SelectedIndex}");
+            }
+        }
     }
+
 }

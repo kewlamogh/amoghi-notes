@@ -8,9 +8,9 @@ public class Persistance
     {
         return File.ReadAllText(@"C:\Users\amogh\source\repos\amoghi-notes\Persistor.txt").Split("\n");
     }
-    public static void Write(List<string> x)
+    public static void Write(dynamic x, string file = "Persistor.txt")
     {
-        File.WriteAllLines(@"C:\Users\amogh\source\repos\amoghi-notes\Persistor.txt", x);
+        File.WriteAllLines(@$"C:\Users\amogh\source\repos\amoghi-notes\{file}", x);
     }
     public static void Save(ItemCollection o)
     {
