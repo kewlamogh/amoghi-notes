@@ -2,20 +2,37 @@
 using System.Collections.Generic;
 using System.Windows.Controls;
 
-public class Persistance
+namespace amoghi_notes
 {
-    public static string[] GetAll()
+    public class Persistance
     {
-        return File.ReadAllText(@"C:\Users\amogh\source\repos\amoghi-notes\Persistor.txt").Split("\n");
-    }
-    public static void Write(dynamic x, string file = "Persistor.txt")
-    {
-        File.WriteAllLines(@$"C:\Users\amogh\source\repos\amoghi-notes\{file}", x);
-    }
-    public static void Save(ItemCollection o)
-    {
-        List<string> props = new();
-        foreach (object i in o) props.Add(i.ToString().Replace("\n", "<br>").Trim());
-        Write(props);
+        public static string[] GetAll()
+        {
+            string path = @"Persistor.txt";
+
+            if (!File.Exists(path))
+            {
+                using FileStream fs = File.Create(path);
+            }
+
+            path = @"Recover.txt";
+
+            if (!File.Exists(path))
+            {
+                using FileStream fs = File.Create(path);
+            }
+
+            return File.ReadAllText(@".\Persistor.txt").Split("\n");
+        }
+        public static void Write(dynamic x, string file = "Persistor.txt")
+        {
+            File.WriteAllLines(@$"{file}", x);
+        }
+        public static void Save(ItemCollection o)
+        {
+            List<string> props = new();
+            foreach (object i in o) props.Add(i.ToString().Replace("\n", "<br>").Trim());
+            Write(props);
+        }
     }
 }

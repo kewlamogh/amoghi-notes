@@ -1,1 +1,1 @@
-﻿Clear-Content "C:\Users\amogh\source\repos\amoghi-notes\Persistor.txt";
+﻿Clear-Content ".\source\repos\amoghi-notes\Persistor.txt";

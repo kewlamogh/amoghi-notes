@@ -9,7 +9,7 @@
         <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
             <TextBlock FontFamily="Verdana" x:Name="text" Width="353" FontSize="50">AmoghiNotes</TextBlock>
             <TextBlock x:Name="Alert" FontFamily="Comic Sans MS, Verdana" Width="703"></TextBlock>
-            <TextBox Width="703" x:Name="noteText" Margin="0, 0, 0, 10"></TextBox>
+            <TextBox Width="703" x:Name="noteText" Margin="0, 0, 0, 10" KeyUp="NoteText_KeyDown"></TextBox>
             <Button x:Name="BtnAdd" Margin="0,0,0,10" Width="703" Click="BtnAdd_Click">Add Note</Button>
             <Button Click="ClearClick" Width="703" Margin="0, 0, 0, 10" >Clear</Button>
             <Button Width ="703" Click="Delete" Margin="0, 0, 0, 10" >Delete</Button>

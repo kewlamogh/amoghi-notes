@@ -6,49 +6,35 @@ using System.Linq;
 
 namespace amoghi_notes
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-
-    internal class Item
-    {
-        public string Content;
-        public override string ToString()
-        {
-            return Content;
-        }
-        public void Delete(ref ItemCollection notes)
-        {
-            notes.Remove(Content);
-        }
-    }
-
     public partial class MainWindow : Window
     {
+        private string prev = "";
         private string SelectedItem;
-        private bool _IsItemSelected;
+        private bool _IsItemSelected; // backing field for IsItemSelected
         private bool IsItemSelected { get { return _IsItemSelected; } set {
                 _IsItemSelected = value;
-                BtnAdd.Content = $"{(value ? "Edit" : "Add")} Note";
+                BtnAdd.Content = value ? "Exit Editing" : "Add Note";
             } }
 
-        private readonly Func<string, string> Format = (string i) => i.Replace("<br>", "\n").Trim();
-        private List<Item> items = new();
+        private readonly Func<string, string> Format = (string i) => i.Replace("<br>", "\n").Trim(); // formatting a string
         private void ClearClick(object sender, RoutedEventArgs e)
         {
-            noteText.Text = "";
+            noteText.Text = ""; // clears the box
         }
         private void Refr(object sender, RoutedEventArgs e)
         {
+            /* 
+             * refreshes for changes from the raw persistance file
+             * and researches the query for updates
+             */
             notes.Items.Clear();
-            items.Clear();
 
             Load();
             SearchFunctionality();
         }
         private void Load()
         {
-            foreach (string i in Persistance.GetAll()) if (Format(i) != "") { notes.Items.Add(Format(i)); items.Add( new Item { Content = Format(i)} ); }
+            foreach (string i in Persistance.GetAll()) if (Format(i) != "") { notes.Items.Add(Format(i)); } // loading
         }
 
         public MainWindow()
@@ -59,17 +45,15 @@ namespace amoghi_notes
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            string was = Alert.Text;
-            Alert.Text = "";
+            string was = Alert.Text; // saving the value of Alert.Text
+            Alert.Text = ""; // clearing textbox
 
-            Persistance.Save(notes.Items);
+            Persistance.Save(notes.Items); // saving to persistance
 
             IsItemSelected = false;
+            
+            if (noteText.Text == "" || was == "[EDIT]") { noteText.Text = ""; return; }
 
-            if (noteText.Text == "")
-            {
-                return;
-            }
 
             if (notes.Items.Contains(noteText.Text))
             {
@@ -79,7 +63,6 @@ namespace amoghi_notes
 
             TextBox x = noteText;
             notes.Items.Add(Format(x.Text));
-            items.Add(new Item { Content = Format(x.Text) });
             x.Text = "";
 
             Persistance.Save(notes.Items);
@@ -99,7 +82,8 @@ namespace amoghi_notes
 
                 IsItemSelected = true;
 
-                notes.Items.Remove(SelectedItem);
+                prev = SelectedItem;
+
                 Alert.Text = "[EDIT]";
                 Persistance.Save(notes.Items);
 
@@ -114,7 +98,7 @@ namespace amoghi_notes
             Persistance.Write(Persistance.GetAll(), "Recover.txt");
 
             Persistance.Write(Array.Empty<string>(), "Persistor.txt");
-            MessageBox.Show("Deleted all notes [to recover them, go to Recover.txt, copy paste the contents into Persistor.txt, then click the refresh button].");
+            MessageBox.Show("Deleted all notes [to recover them, go to C:\\users\\<your.name>\\Recover.txt, copy paste the contents into C:\\users\\<your.name>\\Persistor.txt, then click the refresh button].");
             notes.Items.Clear();
         }
 
@@ -144,7 +128,7 @@ namespace amoghi_notes
                 IsItemSelected = false;
             }
         }
-        private void Notes_DoubleClick2(object sender, RoutedEventArgs e)
+        private void Notes_DoubleClick2(object sender, RoutedEventArgs e) // basically notes_doubleclick but for the search results
         {
             try
             {
@@ -155,7 +139,8 @@ namespace amoghi_notes
 
                 IsItemSelected = true;
 
-                notes.Items.Remove(SelectedItem);
+                prev = SelectedItem; // setting prev
+
                 Alert.Text = "[EDIT]";
                 Persistance.Save(notes.Items);
 
@@ -164,6 +149,15 @@ namespace amoghi_notes
             {
                 Console.WriteLine($"The index is: {notes.SelectedIndex}");
             }
+        }
+
+        private void NoteText_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (Alert.Text != "[EDIT]") return;
+
+            notes.Items.Remove(prev);
+            notes.Items.Add(noteText.Text);
+            prev = noteText.Text;
         }
     }
 
